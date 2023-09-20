@@ -62,9 +62,9 @@ export default function CreateProjectForm() {
 							</a>
 						</button>
 					</form>
-					<p className="navbar-brand">
+					<a className="navbar-brand">
 						Add project
-					</p>
+					</a>
 				</div>
 			</nav>
 		<div className="container-fluid" style={{ padding: "1rem", marginTop: "50px" }}>

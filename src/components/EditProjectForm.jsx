@@ -65,7 +65,7 @@ const [formData, setFormData] = useState({
     <>
     <nav className="navbar fixed-top">
 				<div className="container-fluid">
-        <form className="d-flex">
+        <form>
 						<button className="btn" type="button">
 							<a
 								href="/"
@@ -76,9 +76,9 @@ const [formData, setFormData] = useState({
 							</a>
 						</button>
 					</form>
-					<p className="navbar-brand">
+					<a className="navbar-brand">
 						Edit project
-					</p>
+					</a>
 				</div>
 			</nav>
     <div className="container-fluid" style={{ padding: "1rem", marginTop: "50px" }}>
