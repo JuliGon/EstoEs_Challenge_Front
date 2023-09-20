@@ -6,6 +6,7 @@ import {
 	deleteProject,
 	updateProject,
 } from "../utils/projectControllers";
+import { Link, useNavigate } from "react-router-dom";
 import { getAssignments } from "../utils/assignmentControllers";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
@@ -16,7 +17,8 @@ export default function ProjectList() {
 	const [error, setError] = useState(null);
 	const [projects, setProjects] = useState([]);
 	const [assignments, setAssignments] = useState([]);
-	const [openProjectMenu, setOpenProjectMenu] = useState(null); // Nuevo estado para controlar qué menú se abre
+	const [openProjectMenu, setOpenProjectMenu] = useState(null);
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -77,9 +79,7 @@ export default function ProjectList() {
 
 	const handleEdit = async (project) => {
 		try {
-			const updatedProject = await updateProject(project.id, {
-				name: "Nuevo nombre del proyecto",
-			});
+			const updatedProject = await updateProject(project.id);
 
 			setProjects((prevProjects) =>
 				prevProjects.map((p) =>
@@ -89,6 +89,9 @@ export default function ProjectList() {
 
 			// Cierra el menú después de editar.
 			closeMenu();
+
+			// Utiliza navigate para redirigir a la página de edición
+			navigate(`/projects/${project.id}`);
 		} catch (error) {
 			console.error("Error al editar el proyecto:", error);
 		}
@@ -147,95 +150,122 @@ export default function ProjectList() {
 	};
 
 	return (
-		<div className="container-fluid">
-			<div className="fw-bold" style={{ marginLeft: "24px" }}>
-				My Projects
-			</div>
-			{loading && <p>Loading...</p>}
-			{error && <p>Error: {error.message}</p>}
-			{!loading && !error && (
-				<ul className="list-group list-group-flush">
-					{projects.map((project) => (
-						<li
-							key={project.id}
-							className="list-group-item align-items-start position-relative"
-							aria-current="true"
-						>
-							<div>
-								<div className="ms-2 me-auto">
-									<div className="fw-bold">{project.name}</div>
-									<small>
-										Creation date: {formatCreatedAt(project.createdAt)}
-									</small>
-								</div>
+		<>
+			<nav className="navbar fixed-top">
+				<div className="container-fluid">
+					<a className="navbar-brand" href="/" style={{ marginLeft: "25px" }}>
+						My Projects
+					</a>
+					<form className="d-flex">
+						<button className="btn btn-danger" type="button">
+							<a
+								href="/projects/create"
+								style={{ textDecoration: "none", color: "#ffffff" }}
+							>
+								Add project
+							</a>
+						</button>
+					</form>
+				</div>
+			</nav>
+			<div className="container-fluid" style={{ marginTop: "50px" }}>
+				{loading && <p>Loading...</p>}
+				{error && <p>Error: {error.message}</p>}
+				{!loading && !error && (
+					<ul className="list-group list-group-flush">
+						{projects.map((project) => (
+							<li
+								key={project.id}
+								className="list-group-item align-items-start position-relative"
+								aria-current="true"
+							>
 								<div>
-									{project.assignment && (
-										<img
-											src={project.assignment.image}
-											alt="Avatar"
-											className="rounded-circle me-3"
-											width="25"
-											height="25"
-											style={{ marginLeft: "7.5px" }}
-										/>
-									)}
-									<span className="">
-										{project.assignment
-											? project.assignment.name
-											: "Unassigned"}
-									</span>
-								</div>
-								<div
-									className="position-absolute top-0 end-0 mt-2 me-2"
-									style={{ zIndex: 1 }}
-									ref={menuRef}
-									onClick={(e) => e.stopPropagation()}
-								>
-									<button
-										className="btn btn-link btn-sm"
-										onClick={(e) => {
-											e.stopPropagation();
-											openMenu(project);
-										}}
+									<div className="ms-2 me-auto">
+										<div className="fw-bold">{project.name}</div>
+										<small>
+											Creation date: {formatCreatedAt(project.createdAt)}
+										</small>
+									</div>
+									<div>
+										{project.assignment && (
+											<img
+												src={project.assignment.image}
+												alt="Avatar"
+												className="rounded-circle me-3"
+												width="25"
+												height="25"
+												style={{ marginLeft: "7.5px" }}
+											/>
+										)}
+										<span className="">
+											{project.assignment
+												? project.assignment.name
+												: "Unassigned"}
+										</span>
+									</div>
+									<div
+										className="position-absolute top-0 end-0 mt-2 me-2"
+										style={{ zIndex: 1 }}
+										ref={menuRef}
+										onClick={(e) => e.stopPropagation()}
 									>
-										<BsThreeDotsVertical style={{ color: "black" }} />
-									</button>
-									{openProjectMenu === project && (
-										<div
-											className="position-absolute"
-											style={{
-												...calculateMenuPosition(project),
-												backgroundColor: "white",
-                        width: "100px",
-												boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)",
-												zIndex: 5,
-                        marginLeft: "-50px",
+										<button
+											className="btn btn-link btn-sm"
+											onClick={(e) => {
+												e.stopPropagation();
+												openMenu(project);
 											}}
 										>
-											<ul className="list-group list-group-flush">
-												<li
-													className="list-group-item d-flex align-items-center"
-													onClick={() => handleEdit(project)}
+											<BsThreeDotsVertical style={{ color: "#1d1d1d" }} />
+										</button>
+										{openProjectMenu === project && (
+											<div
+												className="position-absolute"
+												style={{
+													...calculateMenuPosition(project),
+													backgroundColor: "white",
+													width: "100px",
+													boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)",
+													zIndex: 10,
+													marginLeft: "-50px",
+												}}
+											>
+												<ul
+													className="list-group list-group-flush"
+													style={{ cursor: "pointer" }}
 												>
-													<BsPencil style={{ marginRight: "8px" }} />
-													<span>Edit</span>
-												</li>
-												<li
-													className="list-group-item d-flex align-items-center"
-													onClick={() => handleDelete(project)}
-												>
-													<BsTrash3 style={{ marginRight: "8px" }} />
-													<span>Delete</span>
-												</li>
-											</ul>
-										</div>
-									)}
+													<li
+														className="list-group-item d-flex align-items-center"
+														onClick={() => handleEdit(project)}
+													>
+														<Link
+															to={`/projects/${project.id}`}
+															style={{
+																textDecoration: "none",
+																color: "#1d1d1d",
+															}}
+														>
+															<BsPencil style={{ marginRight: "8px" }} />
+															<span>Edit</span>
+														</Link>
+													</li>
+													<li
+														className="list-group-item d-flex align-items-center"
+														onClick={() => handleDelete(project)}
+													>
+														<BsTrash3 style={{ marginRight: "8px" }} />
+														<span>Delete</span>
+													</li>
+												</ul>
+											</div>
+										)}
+									</div>
 								</div>
-							</div>
-						</li>
-					))}
-				</ul>
-			)}
-		</div>
+							</li>
+						))}
+					</ul>
+				)}
+			</div>
+		</>
 	);
 }
