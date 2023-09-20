@@ -155,7 +155,7 @@ export default function CreateProjectForm() {
 					</select>
 				</div>
 				<button type="submit" className="btn btn-danger">
-          Submit
+          Create project
 				</button>
 			</form>
 		</div>
