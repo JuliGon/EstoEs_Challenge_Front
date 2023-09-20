@@ -78,25 +78,27 @@ export default function ProjectList() {
 		return date.toLocaleDateString("es-ES", options);
 	};
 
-	const handleEdit = async (project) => {
+	const handleEdit = async (project, formData) => {
 		try {
-			const updatedProject = await updateProject(project.id);
+			const updatedProject = { ...project, ...formData };
+			const response = await updateProject(project.id, updatedProject);
 
-			setProjects((prevProjects) =>
-				prevProjects.map((p) =>
-					p.id === updatedProject.id ? updatedProject : p
-				)
-			);
-
-			// Cierra el menú después de editar.
-			closeMenu();
-
-			// Utiliza navigate para redirigir a la página de edición
-			navigate(`/projects/${project.id}`);
+			if (response.success) {
+				setProjects((prevProjects) =>
+					prevProjects.map((p) => (p.id === project.id ? updatedProject : p))
+				);
+	
+				closeMenu();
+	
+				navigate(`/projects/${project.id}`);
+			} else {
+				console.error("Error al editar el proyecto:", response.error);
+			}
 		} catch (error) {
 			console.error("Error al editar el proyecto:", error);
 		}
 	};
+	
 
 	const handleDelete = async (project) => {
 		try {
@@ -106,7 +108,6 @@ export default function ProjectList() {
 				prevProjects.filter((p) => p.id !== project.id)
 			);
 
-			// Cierra el menú después de eliminar.
 			closeMenu();
 		} catch (error) {
 			console.error("Error al eliminar el proyecto:", error);
@@ -207,7 +208,6 @@ export default function ProjectList() {
 									</div>
 									<div
 										className="position-absolute top-0 end-0 mt-2 me-2"
-										style={{ zIndex: 1 }}
 										ref={menuRef}
 										onClick={(e) => e.stopPropagation()}
 									>
@@ -228,7 +228,7 @@ export default function ProjectList() {
 													backgroundColor: "white",
 													width: "100px",
 													boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)",
-													zIndex: 10,
+													zIndex: 1,
 													marginLeft: "-50px",
 												}}
 											>

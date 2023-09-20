@@ -52,23 +52,24 @@ export async function createProject(projectData) {
 }
 
 export async function updateProject(id, updatedData) {
-	try {
-		const response = await fetch(`${PROJECTS_URL}/${id}`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(updatedData),
-		});
+  try {
+    const response = await fetch(`${PROJECTS_URL}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedData),
+    });
 
-		if (!response.ok) {
-			throw new Error("Network response was not ok");
-		}
+    if (!response.ok) {
+      console.error("Error en la respuesta:", response);
+      throw new Error("Network response was not ok");
+    }
 
-		return response.json();
-	} catch (error) {
-		throw error;
-	}
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
 }
 
 export async function deleteProject(id) {

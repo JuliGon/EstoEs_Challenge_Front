@@ -109,7 +109,7 @@ export default function CreateProjectForm() {
 							setProjectData({ ...projectData, projectManager: e.target.value })
 						}
 					>
-						<option value="">Select a PM</option>
+						<option value="">Select a person</option>
 						{projectManagers?.map((e) => (
 							<option key={e.id} value={e.id}>
 								{e.name}
@@ -129,7 +129,7 @@ export default function CreateProjectForm() {
 							setProjectData({ ...projectData, assignedTo: e.target.value })
 						}
 					>
-						<option value="">Select an assignment</option>
+						<option value="">Select a person</option>
 						{assignments?.map((e) => (
 							<option key={e.id} value={e.id}>
 								{e.name}
