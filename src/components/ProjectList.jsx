@@ -11,6 +11,7 @@ import { getAssignments } from "../utils/assignmentControllers";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 import { BsTrash3 } from "react-icons/bs";
+import { BsPlusLg } from "react-icons/bs";
 
 export default function ProjectList() {
 	const [loading, setLoading] = useState(true);
@@ -162,6 +163,7 @@ export default function ProjectList() {
 								href="/projects/create"
 								style={{ textDecoration: "none", color: "#ffffff" }}
 							>
+								<BsPlusLg style={{marginRight: "8px"}} />
 								Add project
 							</a>
 						</button>
