@@ -3,6 +3,7 @@ import { createProject } from "../utils/projectControllers";
 import { getPMs } from "../utils/pmControllers";
 import { getAssignments } from "../utils/assignmentControllers";
 import { BsArrowLeft } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateProjectForm() {
 	const [projectManagers, setProjectManagers] = useState([]);
@@ -14,6 +15,8 @@ export default function CreateProjectForm() {
 		assignedTo: "",
 		status: "",
 	});
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		async function fetchData() {
@@ -33,6 +36,17 @@ export default function CreateProjectForm() {
 
 	const handleCreateProject = (e) => {
 		e.preventDefault();
+		if (
+			!projectData.name ||
+			!projectData.description ||
+			!projectData.projectManager ||
+			!projectData.assignedTo ||
+			!projectData.status
+		) {
+			alert("All fields are required");
+			return;
+		}
+
 		try {
 			createProject(projectData);
 			setProjectData({
@@ -42,6 +56,8 @@ export default function CreateProjectForm() {
 				assignedTo: "",
 				status: "",
 			});
+			window.alert("Project created successfully")
+			navigate("/");
 		} catch (error) {
 			console.error("Something went wrong", error);
 		}
@@ -82,6 +98,7 @@ export default function CreateProjectForm() {
 							onChange={(e) =>
 								setProjectData({ ...projectData, name: e.target.value })
 							}
+							required
 						/>
 					</div>
 					<div className="mb-3">
@@ -96,6 +113,7 @@ export default function CreateProjectForm() {
 							onChange={(e) =>
 								setProjectData({ ...projectData, description: e.target.value })
 							}
+							required
 						/>
 					</div>
 					<div className="mb-3">
@@ -112,6 +130,7 @@ export default function CreateProjectForm() {
 									projectManager: e.target.value,
 								})
 							}
+							required
 						>
 							<option value="">Select a person</option>
 							{projectManagers?.map((e) => (
@@ -132,6 +151,7 @@ export default function CreateProjectForm() {
 							onChange={(e) =>
 								setProjectData({ ...projectData, assignedTo: e.target.value })
 							}
+							required
 						>
 							<option value="">Select a person</option>
 							{assignments?.map((e) => (
@@ -152,6 +172,7 @@ export default function CreateProjectForm() {
 							onChange={(e) =>
 								setProjectData({ ...projectData, status: e.target.value })
 							}
+							required
 						>
 							<option value="">Select a status</option>
 							<option value="Enabled">Enabled</option>

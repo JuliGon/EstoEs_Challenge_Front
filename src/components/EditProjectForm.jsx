@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { updateProject, getProjects } from "../utils/projectControllers";
 import { useParams } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 export default function EditProjectForm() {
 	const { id } = useParams();
@@ -16,6 +17,8 @@ export default function EditProjectForm() {
 		assignedTo: "",
 		status: "",
 	});
+
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		async function fetchData() {
@@ -61,9 +64,21 @@ export default function EditProjectForm() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		if (
+			!formData.name ||
+			!formData.description ||
+			!formData.projectManager ||
+			!formData.assignedTo ||
+			!formData.status
+		) {
+			alert("All fields are required");
+			return;
+		}
+
 		try {
 			await updateProject(projectId, formData);
-			console.log("Project updated successfully");
+			window.alert("Project updated successfully");
+			navigate("/");
 		} catch (error) {
 			console.error("Something went wrong:", error);
 		}
@@ -103,6 +118,7 @@ export default function EditProjectForm() {
 							name="name"
 							value={formData.name}
 							onChange={handleInputChange}
+							required
 						/>
 					</div>
 					<div className="mb-3">
@@ -116,6 +132,7 @@ export default function EditProjectForm() {
 							name="description"
 							value={formData.description}
 							onChange={handleInputChange}
+							required
 						/>
 					</div>
 					<div className="mb-3">
@@ -129,6 +146,7 @@ export default function EditProjectForm() {
 							name="projectManager"
 							value={formData.projectManager}
 							onChange={handleInputChange}
+							required
 						/>
 					</div>
 					<div className="mb-3">
@@ -142,6 +160,7 @@ export default function EditProjectForm() {
 							name="assignedTo"
 							value={formData.assignedTo}
 							onChange={handleInputChange}
+							required
 						/>
 					</div>
 					<div className="mb-3">
@@ -155,6 +174,7 @@ export default function EditProjectForm() {
 							name="status"
 							value={formData.status}
 							onChange={handleInputChange}
+							required
 						/>
 					</div>
 					<button type="submit" className="btn btn-danger">
