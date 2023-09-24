@@ -83,7 +83,7 @@ export default function CreateProjectForm() {
 			</nav>
 			<div
 				className="container-fluid"
-				style={{ padding: "1rem", marginTop: "50px" }}
+				style={{ marginTop: "65px" }}
 			>
 				<form onSubmit={handleCreateProject}>
 					<div className="mb-3">

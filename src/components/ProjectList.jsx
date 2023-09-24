@@ -157,7 +157,7 @@ export default function ProjectList() {
 				style={{ zIndex: 1, backgroundColor: "#ffffff" }}
 			>
 				<div className="container-fluid">
-					<a className="navbar-brand" href="/" style={{ marginLeft: "25px" }}>
+					<a className="navbar-brand" href="/" style={{ marginLeft: "22px" }}>
 						My Projects
 					</a>
 					<form className="d-flex">
@@ -173,7 +173,7 @@ export default function ProjectList() {
 					</form>
 				</div>
 			</nav>
-			<div className="container-fluid" style={{ marginTop: "50px" }}>
+			<div className="container-fluid" style={{ marginTop: "65px" }}>
 				{loading && (
 					<div className="d-flex justify-content-center">
 						<div className="spinner-border text-secondary m-5" role="status">

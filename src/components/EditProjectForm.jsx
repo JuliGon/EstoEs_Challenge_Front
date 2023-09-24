@@ -104,7 +104,7 @@ export default function EditProjectForm() {
 			</nav>
 			<div
 				className="container-fluid"
-				style={{ padding: "1rem", marginTop: "50px" }}
+				style={{ marginTop: "65px" }}
 			>
 				<form onSubmit={handleSubmit}>
 					<div className="mb-3">
