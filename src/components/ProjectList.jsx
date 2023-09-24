@@ -87,18 +87,17 @@ export default function ProjectList() {
 				setProjects((prevProjects) =>
 					prevProjects.map((p) => (p.id === project.id ? updatedProject : p))
 				);
-	
+
 				closeMenu();
-	
+
 				navigate(`/projects/${project.id}`);
 			} else {
-				console.error("Error al editar el proyecto:", response.error);
+				console.error("Something went wrong:", response.error);
 			}
 		} catch (error) {
-			console.error("Error al editar el proyecto:", error);
+			console.error("Something went wrong:", error);
 		}
 	};
-	
 
 	const handleDelete = async (project) => {
 		try {
@@ -110,7 +109,7 @@ export default function ProjectList() {
 
 			closeMenu();
 		} catch (error) {
-			console.error("Error al eliminar el proyecto:", error);
+			console.error("Something went wrong:", error);
 		}
 	};
 
@@ -137,7 +136,7 @@ export default function ProjectList() {
 				elementRect.bottom + window.scrollY + elementRect.height;
 
 			if (topPosition + elementRect.height > windowHeight) {
-				// Si el menú desplegable se desborda hacia abajo, muéstralo hacia arriba
+				// Si el menú desplegable se desborda hacia abajo, lo muestra hacia arriba
 				return {
 					top: "auto",
 					bottom: elementRect.height + "px",
@@ -153,7 +152,10 @@ export default function ProjectList() {
 
 	return (
 		<>
-			<nav className="navbar fixed-top">
+			<nav
+				className="navbar fixed-top"
+				style={{ zIndex: 1, backgroundColor: "#ffffff" }}
+			>
 				<div className="container-fluid">
 					<a className="navbar-brand" href="/" style={{ marginLeft: "25px" }}>
 						My Projects
@@ -164,7 +166,7 @@ export default function ProjectList() {
 								href="/projects/create"
 								style={{ textDecoration: "none", color: "#ffffff" }}
 							>
-								<BsPlusLg style={{marginRight: "8px"}} />
+								<BsPlusLg style={{ marginRight: "8px" }} />
 								Add project
 							</a>
 						</button>
@@ -172,7 +174,13 @@ export default function ProjectList() {
 				</div>
 			</nav>
 			<div className="container-fluid" style={{ marginTop: "50px" }}>
-				{loading && <p>Loading...</p>}
+				{loading && (
+					<div className="d-flex justify-content-center">
+						<div className="spinner-border text-secondary m-5" role="status">
+							<span className="visually-hidden">Loading...</span>
+						</div>
+					</div>
+				)}
 				{error && <p>Error: {error.message}</p>}
 				{!loading && !error && (
 					<ul className="list-group list-group-flush">

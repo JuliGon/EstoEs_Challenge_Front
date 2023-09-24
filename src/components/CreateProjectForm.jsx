@@ -43,122 +43,126 @@ export default function CreateProjectForm() {
 				status: "",
 			});
 		} catch (error) {
-			console.error("Error al crear el proyecto", error);
+			console.error("Something went wrong", error);
 		}
 	};
 
 	return (
 		<>
-		<nav className="navbar fixed-top">
+			<nav
+				className="navbar fixed-top"
+				style={{ zIndex: 1, backgroundColor: "#ffffff" }}
+			>
 				<div className="container-fluid">
-        <form className="d-flex">
+					<form className="d-flex">
 						<button className="btn" type="button">
-							<a
-								href="/"
-								style={{ textDecoration: "none", color: "#1d1d1d" }}
-							>
-                <BsArrowLeft style={{marginRight: "8px"}} />
+							<a href="/" style={{ textDecoration: "none", color: "#1d1d1d" }}>
+								<BsArrowLeft style={{ marginRight: "8px" }} />
 								Back
 							</a>
 						</button>
 					</form>
-					<a className="navbar-brand">
-						Add project
-					</a>
+					<a className="navbar-brand">Add project</a>
 				</div>
 			</nav>
-		<div className="container-fluid" style={{ padding: "1rem", marginTop: "50px" }}>
-			<form onSubmit={handleCreateProject}>
-				<div className="mb-3">
-					<label htmlFor="projectName" className="form-label">
-						Name
-					</label>
-					<input
-						type="text"
-						className="form-control"
-						id="projectName"
-						value={projectData.name}
-						onChange={(e) =>
-							setProjectData({ ...projectData, name: e.target.value })
-						}
-					/>
-				</div>
-				<div className="mb-3">
-					<label htmlFor="projectDescription" className="form-label">
-						Description
-					</label>
-					<textarea
-						className="form-control"
-						id="projectDescription"
-						rows="3"
-						value={projectData.description}
-						onChange={(e) =>
-							setProjectData({ ...projectData, description: e.target.value })
-						}
-					/>
-				</div>
-				<div className="mb-3">
-					<label htmlFor="projectPM" className="form-label">
-						Project Manager
-					</label>
-					<select
-						className="form-select"
-						id="projectPM"
-						value={projectData.projectManager}
-						onChange={(e) =>
-							setProjectData({ ...projectData, projectManager: e.target.value })
-						}
-					>
-						<option value="">Select a person</option>
-						{projectManagers?.map((e) => (
-							<option key={e.id} value={e.id}>
-								{e.name}
-							</option>
-						))}
-					</select>
-				</div>
-				<div className="mb-3">
-					<label htmlFor="projectAssignment" className="form-label">
-						Assignment
-					</label>
-					<select
-						className="form-select"
-						id="projectAssignment"
-						value={projectData.assignedTo}
-						onChange={(e) =>
-							setProjectData({ ...projectData, assignedTo: e.target.value })
-						}
-					>
-						<option value="">Select a person</option>
-						{assignments?.map((e) => (
-							<option key={e.id} value={e.id}>
-								{e.name}
-							</option>
-						))}
-					</select>
-				</div>
-				<div className="mb-3">
-					<label htmlFor="projectStatus" className="form-label">
-						Status
-					</label>
-					<select
-						className="form-select"
-						id="projectStatus"
-						value={projectData.status}
-						onChange={(e) =>
-							setProjectData({ ...projectData, status: e.target.value })
-						}
-					>
-						<option value="">Select a status</option>
-						<option value="enabled">Enabled</option>
-						<option value="disabled">Disabled</option>
-					</select>
-				</div>
-				<button type="submit" className="btn btn-danger">
-          Create project
-				</button>
-			</form>
-		</div>
+			<div
+				className="container-fluid"
+				style={{ padding: "1rem", marginTop: "50px" }}
+			>
+				<form onSubmit={handleCreateProject}>
+					<div className="mb-3">
+						<label htmlFor="projectName" className="form-label">
+							Name
+						</label>
+						<input
+							type="text"
+							className="form-control"
+							id="projectName"
+							value={projectData.name}
+							onChange={(e) =>
+								setProjectData({ ...projectData, name: e.target.value })
+							}
+						/>
+					</div>
+					<div className="mb-3">
+						<label htmlFor="projectDescription" className="form-label">
+							Description
+						</label>
+						<textarea
+							className="form-control"
+							id="projectDescription"
+							rows="3"
+							value={projectData.description}
+							onChange={(e) =>
+								setProjectData({ ...projectData, description: e.target.value })
+							}
+						/>
+					</div>
+					<div className="mb-3">
+						<label htmlFor="projectPM" className="form-label">
+							Project Manager
+						</label>
+						<select
+							className="form-select"
+							id="projectPM"
+							value={projectData.projectManager}
+							onChange={(e) =>
+								setProjectData({
+									...projectData,
+									projectManager: e.target.value,
+								})
+							}
+						>
+							<option value="">Select a person</option>
+							{projectManagers?.map((e) => (
+								<option key={e.id} value={e.id}>
+									{e.name}
+								</option>
+							))}
+						</select>
+					</div>
+					<div className="mb-3">
+						<label htmlFor="projectAssignment" className="form-label">
+							Assigned to
+						</label>
+						<select
+							className="form-select"
+							id="projectAssignment"
+							value={projectData.assignedTo}
+							onChange={(e) =>
+								setProjectData({ ...projectData, assignedTo: e.target.value })
+							}
+						>
+							<option value="">Select a person</option>
+							{assignments?.map((e) => (
+								<option key={e.id} value={e.id}>
+									{e.name}
+								</option>
+							))}
+						</select>
+					</div>
+					<div className="mb-3">
+						<label htmlFor="projectStatus" className="form-label">
+							Status
+						</label>
+						<select
+							className="form-select"
+							id="projectStatus"
+							value={projectData.status}
+							onChange={(e) =>
+								setProjectData({ ...projectData, status: e.target.value })
+							}
+						>
+							<option value="">Select a status</option>
+							<option value="Enabled">Enabled</option>
+							<option value="Disabled">Disabled</option>
+						</select>
+					</div>
+					<button type="submit" className="btn btn-danger">
+						Create project
+					</button>
+				</form>
+			</div>
 		</>
 	);
 }

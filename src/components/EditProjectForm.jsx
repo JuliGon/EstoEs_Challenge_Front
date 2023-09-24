@@ -1,27 +1,14 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { getProjects, updateProject } from "../utils/projectControllers";
+import { updateProject, getProjects } from "../utils/projectControllers";
 import { useParams } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
 
 export default function EditProjectForm() {
+	const { id } = useParams();
+	const projectId = parseInt(id, 10);
 	const [projects, setProjects] = useState([]);
-	const { projectId } = useParams();
-
-	useEffect(() => {
-		async function fetchData() {
-			try {
-				const projects = await getProjects();
-
-				setProjects(projects);
-			} catch (error) {
-				console.error("Error al cargar datos", error);
-			}
-		}
-
-		fetchData();
-	}, []);
-
 	const [formData, setFormData] = useState({
 		name: "",
 		description: "",
@@ -31,18 +18,36 @@ export default function EditProjectForm() {
 	});
 
 	useEffect(() => {
-		const project = projects.find((p) => p.id === projectId);
-		if (!project || !project.name) {
-			console.error("Proyecto no encontrado o nombre no válido.");
+		async function fetchData() {
+			try {
+				const projectsData = await getProjects();
+				setProjects(projectsData);
+				console.log(projectsData);
+			} catch (error) {
+				console.error("Error loading data", error);
+			}
+		}
+
+		fetchData();
+	}, []);
+
+	useEffect(() => {
+		// Verifica si el proyecto con projectId existe en la lista de proyectos.
+		console.log(projectId);
+		const project = projects.find((project) => project.id === projectId);
+
+		if (!project) {
+			console.error("Project not found");
 			return;
 		}
 
+		// Actualiza el estado de formData cuando se encuentra el proyecto.
 		setFormData({
-			name: project?.name || "",
-			description: project?.description || "",
-			projectManager: project?.projectManager || "",
-			assignedTo: project?.assignedTo || "",
-			status: project?.status || "",
+			name: project.name || "",
+			description: project.description || "",
+			projectManager: project.projectManager || "",
+			assignedTo: project.assignedTo || "",
+			status: project.status || "",
 		});
 	}, [projectId, projects]);
 
@@ -58,15 +63,18 @@ export default function EditProjectForm() {
 		e.preventDefault();
 		try {
 			await updateProject(projectId, formData);
-			console.log("Proyecto actualizado con éxito.");
+			console.log("Project updated successfully");
 		} catch (error) {
-			console.error("Error al actualizar el proyecto:", error);
+			console.error("Something went wrong:", error);
 		}
 	};
 
 	return (
 		<>
-			<nav className="navbar fixed-top">
+			<nav
+				className="navbar fixed-top"
+				style={{ zIndex: 1, backgroundColor: "#ffffff" }}
+			>
 				<div className="container-fluid">
 					<form>
 						<button className="btn" type="button">
@@ -99,7 +107,7 @@ export default function EditProjectForm() {
 					</div>
 					<div className="mb-3">
 						<label htmlFor="description" className="form-label">
-							Descripción
+							Description
 						</label>
 						<textarea
 							type="text"
@@ -125,7 +133,7 @@ export default function EditProjectForm() {
 					</div>
 					<div className="mb-3">
 						<label htmlFor="assignedTo" className="form-label">
-							Assignment
+							Assigned to
 						</label>
 						<input
 							type="text"
