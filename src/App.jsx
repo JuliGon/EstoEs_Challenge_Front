@@ -1,8 +1,8 @@
 /* eslint-disable no-undef */
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ProjectList from "./components/ProjectList";
-import FormManager from "./components/FormManager";
+import ProjectList from "./components/projectList/ProjectList";
+import FormManager from "./components/formManager/FormManager";
 
 function App() {
 	return (

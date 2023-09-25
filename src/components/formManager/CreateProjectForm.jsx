@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { createProject } from "../utils/projectControllers";
-import { getPMs } from "../utils/pmControllers";
-import { getAssignments } from "../utils/assignmentControllers";
+import { createProject } from "../../utils/projectControllers";
+import { getPMs } from "../../utils/pmControllers";
+import { getAssignments } from "../../utils/assignmentControllers";
 import { BsArrowLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
@@ -179,7 +179,7 @@ export default function CreateProjectForm() {
 							<option value="Disabled">Disabled</option>
 						</select>
 					</div>
-					<button type="submit" className="btn btn-danger">
+					<button type="submit" className="btn btn-primary">
 						Create project
 					</button>
 				</form>

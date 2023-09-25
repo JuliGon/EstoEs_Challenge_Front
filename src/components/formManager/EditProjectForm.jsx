@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { updateProject, getProjects } from "../utils/projectControllers";
+import { updateProject, getProjects } from "../../utils/projectControllers";
 import { useParams } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
@@ -177,7 +177,7 @@ export default function EditProjectForm() {
 							required
 						/>
 					</div>
-					<button type="submit" className="btn btn-danger">
+					<button type="submit" className="btn btn-primary">
 						Save changes
 					</button>
 				</form>

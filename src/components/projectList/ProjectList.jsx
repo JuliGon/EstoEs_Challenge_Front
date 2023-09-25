@@ -5,13 +5,14 @@ import {
 	getProjects,
 	deleteProject,
 	updateProject,
-} from "../utils/projectControllers";
+} from "../../utils/projectControllers";
 import { Link, useNavigate } from "react-router-dom";
-import { getAssignments } from "../utils/assignmentControllers";
+import { getAssignments } from "../../utils/assignmentControllers";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 import { BsTrash3 } from "react-icons/bs";
 import ReactPaginate from "react-paginate";
+import "./ProjectList.css";
 
 export default function ProjectList() {
 	const [loading, setLoading] = useState(true);
@@ -23,8 +24,8 @@ export default function ProjectList() {
 	const navigate = useNavigate();
 
 	const [currentPage, setCurrentPage] = useState(0);
-	const projectsPerPage = 6; 
-			
+	const projectsPerPage = 5;
+
 	useEffect(() => {
 		const controller = new AbortController();
 		const signal = controller.signal;
@@ -159,21 +160,23 @@ export default function ProjectList() {
 
 	// Función para filtrar proyectos por nombre
 	const filteredProjects = projects
-  .filter((project) =>
-    project.name.toLowerCase().includes(searchText.toLowerCase())
-  )
-  .slice(currentPage * projectsPerPage, (currentPage + 1) * projectsPerPage);
+		.filter((project) =>
+			project.name.toLowerCase().includes(searchText.toLowerCase())
+		)
+		.slice(currentPage * projectsPerPage, (currentPage + 1) * projectsPerPage);
 
-	console.log(filteredProjects.length)
-
+	// Manejador de paginado
 	const handlePageChange = ({ selected }) => {
 		setCurrentPage(selected);
 	};
 
+	// Proyectos en pantalla
 	const displayedProjects = searchText
-  ? filteredProjects
-  : projects.slice(currentPage * projectsPerPage, (currentPage + 1) * projectsPerPage);
-	
+		? filteredProjects
+		: projects.slice(
+				currentPage * projectsPerPage,
+				(currentPage + 1) * projectsPerPage
+		);
 
 	return (
 		<>
@@ -213,7 +216,7 @@ export default function ProjectList() {
 								value={searchText}
 								onChange={(e) => setSearchText(e.target.value)}
 							/>
-							<button className="btn btn-danger" type="submit">
+							<button className="btn btn-primary" type="submit">
 								Search
 							</button>
 						</form>
@@ -232,118 +235,119 @@ export default function ProjectList() {
 				{!loading && !error && (
 					<ul className="list-group list-group-flush">
 						{displayedProjects.map((project) => (
-								<li
-									key={project.id}
-									className="list-group-item align-items-start position-relative"
-									aria-current="true"
-								>
+							<li
+								key={project.id}
+								className="list-group-item align-items-start position-relative"
+								aria-current="true"
+							>
+								<div>
+									<div className="ms-2 me-auto">
+										<div className="fw-bold">{project.name}</div>
+										<small>
+											Creation date: {formatCreatedAt(project.createdAt)}
+										</small>
+									</div>
 									<div>
-										<div className="ms-2 me-auto">
-											<div className="fw-bold">{project.name}</div>
-											<small>
-												Creation date: {formatCreatedAt(project.createdAt)}
-											</small>
-										</div>
-										<div>
-											{project.assignment && (
-												<img
-													src={project.assignment.image}
-													alt="Avatar"
-													className="rounded-circle me-3"
-													width="25"
-													height="25"
-													style={{ marginLeft: "7.5px" }}
-												/>
-											)}
-											<span className="">
-												{project.assignment
-													? project.assignment.name
-													: "Unassigned"}
-											</span>
-										</div>
-										<div
-											className="position-absolute top-0 end-0 mt-2 me-2"
-											ref={menuRef}
-											onClick={(e) => e.stopPropagation()}
+										{project.assignment && (
+											<img
+												src={project.assignment.image}
+												alt="Avatar"
+												className="rounded-circle me-3"
+												width="25"
+												height="25"
+												style={{ marginLeft: "7.5px" }}
+											/>
+										)}
+										<span className="">
+											{project.assignment
+												? project.assignment.name
+												: "Unassigned"}
+										</span>
+									</div>
+									<div
+										className="position-absolute top-0 end-0 mt-2 me-2"
+										ref={menuRef}
+										onClick={(e) => e.stopPropagation()}
+									>
+										<button
+											className="btn btn-link btn-sm"
+											onClick={(e) => {
+												e.stopPropagation();
+												openMenu(project);
+											}}
 										>
-											<button
-												className="btn btn-link btn-sm"
-												onClick={(e) => {
-													e.stopPropagation();
-													openMenu(project);
+											<BsThreeDotsVertical style={{ color: "#1d1d1d" }} />
+										</button>
+										{openProjectMenu === project && (
+											<div
+												className="position-absolute"
+												style={{
+													...calculateMenuPosition(project),
+													backgroundColor: "white",
+													width: "100px",
+													boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)",
+													zIndex: 1,
+													marginLeft: "-50px",
 												}}
 											>
-												<BsThreeDotsVertical style={{ color: "#1d1d1d" }} />
-											</button>
-											{openProjectMenu === project && (
-												<div
-													className="position-absolute"
-													style={{
-														...calculateMenuPosition(project),
-														backgroundColor: "white",
-														width: "100px",
-														boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)",
-														zIndex: 1,
-														marginLeft: "-50px",
-													}}
+												<ul
+													className="list-group list-group-flush"
+													style={{ cursor: "pointer" }}
 												>
-													<ul
-														className="list-group list-group-flush"
-														style={{ cursor: "pointer" }}
+													<li
+														className="list-group-item d-flex align-items-center"
+														onClick={() => handleEdit(project)}
 													>
-														<li
-															className="list-group-item d-flex align-items-center"
-															onClick={() => handleEdit(project)}
+														<Link
+															to={`/projects/${project.id}`}
+															style={{
+																textDecoration: "none",
+																color: "#1d1d1d",
+															}}
 														>
-															<Link
-																to={`/projects/${project.id}`}
-																style={{
-																	textDecoration: "none",
-																	color: "#1d1d1d",
-																}}
-															>
-																<BsPencil style={{ marginRight: "8px" }} />
-																<span>Edit</span>
-															</Link>
-														</li>
-														<li
-															className="list-group-item d-flex align-items-center"
-															onClick={() => handleDelete(project)}
-														>
-															<BsTrash3 style={{ marginRight: "8px" }} />
-															<span>Delete</span>
-														</li>
-													</ul>
-												</div>
-											)}
-										</div>
+															<BsPencil style={{ marginRight: "8px" }} />
+															<span>Edit</span>
+														</Link>
+													</li>
+													<li
+														className="list-group-item d-flex align-items-center"
+														onClick={() => handleDelete(project)}
+													>
+														<BsTrash3 style={{ marginRight: "8px" }} />
+														<span>Delete</span>
+													</li>
+												</ul>
+											</div>
+										)}
 									</div>
-								</li>
-							)
-						)}
+								</div>
+							</li>
+						))}
 					</ul>
 				)}
 				<ReactPaginate
-        previousLabel={"Previous"}
-        nextLabel={"Next"}
-        breakLabel={"..."}
-        pageCount={Math.ceil(
-          projects.filter((project) =>
-            project.name.toLowerCase().includes(searchText.toLowerCase())
-          ).length / projectsPerPage
-        )}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageChange}
-        containerClassName={"pagination justify-content-center"}
-        activeClassName={"active"}
-        previousClassName={"page-item"}
-        nextClassName={"page-item"}
-        pageClassName={"page-item"}
-        pageLinkClassName={"page-link bs-danger"}
-        previousLinkClassName={"page-link bs-danger"}
-        nextLinkClassName={"page-link bs-danger"}
-      />
+					previousLabel={"Previous"}
+					nextLabel={"Next"}
+					breakLabel={"..."}
+					pageCount={Math.ceil(
+						projects.filter((project) =>
+							project.name.toLowerCase().includes(searchText.toLowerCase())
+						).length / projectsPerPage
+					)}
+					marginPagesDisplayed={2}
+					pageRangeDisplayed={5}
+					onPageChange={handlePageChange}
+					containerClassName={
+						"pagination justify-content-center projects-pagination"
+					}
+					activeClassName={"active"}
+					previousClassName={"page-item"}
+					nextClassName={"page-item"}
+					pageClassName={"page-item"}
+					pageLinkClassName={"page-link"}
+					previousLinkClassName={"page-link"}
+					nextLinkClassName={"page-link"}
+				/>
 			</div>
 		</>
 	);
