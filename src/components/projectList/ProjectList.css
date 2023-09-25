@@ -1,13 +1,138 @@
-.projects-pagination {
-  /* position: fixed; */
+.pagination {
+  height: 36px;
+  margin: 18px 0;
+  color: var(--bs-danger-text-emphasis);
+}
+
+.pagination ul {
+  display: inline-block;
+  color: #ffffff;
   bottom: 0; 
   left: 0;
   right: 0;
   z-index: 1; 
   padding: 10px;
 	margin-top: 20px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
+.pagination li {
+  display: inline;
+  color: var(--bs-danger);
+}
+
+.pagination a {
+  float: left;
+  padding: 0 14px;
+  line-height: 34px;
+  color: var(--bs-danger);
+  text-decoration: none;
+  border-left-width: 0;
+}
+
+.pagination a:hover,
+.pagination .active a {
+  background-color: var(--bs-danger);
+  border: 1px solid var(--bs-danger-border-subtle);
+  color: #ffffff;
+}
+
+.pagination a:focus {
+  background-color: var(--bs-danger);
+  color: #ffffff;
+}
+
+
+.pagination .active a {
+  color: #ffffff;
+  cursor: default;
+}
+
+.pagination .disabled span,
+.pagination .disabled a,
+.pagination .disabled a:hover {
+  color: var(--bs-danger-border-subtle);
+  background-color: transparent;
+  cursor: default;
+}
+
+.pagination li:first-child a {
+  border-left-width: 1px;
+  -webkit-border-radius: 3px 0 0 3px;
+  -moz-border-radius: 3px 0 0 3px;
+  border-radius: 3px 0 0 3px;
+}
+
+.pagination li:last-child a {
+  -webkit-border-radius: 0 3px 3px 0;
+  -moz-border-radius: 0 3px 3px 0;
+  border-radius: 0 3px 3px 0;
+}
+
+.pagination-centered {
+  text-align: center;
+}
+
+.pagination-right {
+  text-align: right;
+}
+
+.pager {
+  margin-left: 0;
+  margin-bottom: 18px;
+  list-style: none;
+  text-align: center;
+  color: #6c58bF;
+}
+
+.pager:before,
+.pager:after {
+  display: table;
+  content: "";
+}
+
+.pager:after {
+  clear: both;
+}
+
+.pager li {
+  display: inline;
+  color: var(--bs-danger);
+}
+
+.pager a {
+  display: inline-block;
+  padding: 5px 14px;
+  color: var(--bs-danger);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+
+.pager a:hover {
+  text-decoration: none;
+  background-color: #f5f5f5;
+}
+
+.pager .next a {
+  float: right;
+}
+
+.pager .previous a {
+  float: left;
+}
+
+.pager .disabled a,
+.pager .disabled a:hover {
+  color: #999999;
+}
 
 
 

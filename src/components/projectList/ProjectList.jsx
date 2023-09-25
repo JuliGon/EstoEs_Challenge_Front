@@ -216,7 +216,7 @@ export default function ProjectList() {
 								value={searchText}
 								onChange={(e) => setSearchText(e.target.value)}
 							/>
-							<button className="btn btn-primary" type="submit">
+							<button className="btn btn-danger" type="submit">
 								Search
 							</button>
 						</form>
@@ -341,7 +341,7 @@ export default function ProjectList() {
 					pageRangeDisplayed={5}
 					onPageChange={handlePageChange}
 					containerClassName={
-						"pagination justify-content-center projects-pagination"
+						"pagination justify-content-center"
 					}
 					activeClassName={"active"}
 					previousClassName={"page-item"}

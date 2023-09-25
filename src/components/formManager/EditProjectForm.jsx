@@ -177,7 +177,7 @@ export default function EditProjectForm() {
 							required
 						/>
 					</div>
-					<button type="submit" className="btn btn-primary">
+					<button type="submit" className="btn btn-danger">
 						Save changes
 					</button>
 				</form>

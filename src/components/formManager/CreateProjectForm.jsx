@@ -179,7 +179,7 @@ export default function CreateProjectForm() {
 							<option value="Disabled">Disabled</option>
 						</select>
 					</div>
-					<button type="submit" className="btn btn-primary">
+					<button type="submit" className="btn btn-danger">
 						Create project
 					</button>
 				</form>
