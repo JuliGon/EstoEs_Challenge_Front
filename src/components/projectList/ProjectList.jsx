@@ -225,7 +225,7 @@ export default function ProjectList() {
 			</nav>
 			<div
 				className="container-fluid"
-				style={{ marginTop: "65px", minHeight: "100vh" }}
+				style={{ marginTop: "65px" }}
 			>
 				{loading && (
 					<div className="d-flex justify-content-center">
