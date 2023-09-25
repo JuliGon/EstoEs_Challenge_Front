@@ -5,9 +5,9 @@ import {
 	getProjects,
 	deleteProject,
 	updateProject,
-} from "../../utils/projectControllers";
+} from "../../services/projectControllers";
 import { Link, useNavigate } from "react-router-dom";
-import { getAssignments } from "../../utils/assignmentControllers";
+import { getAssignments } from "../../services/assignmentControllers";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 import { BsTrash3 } from "react-icons/bs";

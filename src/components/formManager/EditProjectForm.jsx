@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { updateProject, getProjects } from "../../utils/projectControllers";
+import { updateProject, getProjects } from "../../services/projectControllers";
 import { useParams } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";

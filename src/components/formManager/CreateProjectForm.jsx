@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { createProject } from "../../utils/projectControllers";
-import { getPMs } from "../../utils/pmControllers";
-import { getAssignments } from "../../utils/assignmentControllers";
+import { createProject } from "../../services/projectControllers";
+import { getPMs } from "../../services/pmControllers";
+import { getAssignments } from "../../services/assignmentControllers";
 import { BsArrowLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
