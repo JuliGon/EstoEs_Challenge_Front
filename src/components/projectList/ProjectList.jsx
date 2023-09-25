@@ -24,7 +24,7 @@ export default function ProjectList() {
 	const navigate = useNavigate();
 
 	const [currentPage, setCurrentPage] = useState(0);
-	const projectsPerPage = 5;
+	const projectsPerPage = 6;
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -223,7 +223,10 @@ export default function ProjectList() {
 					</div>
 				</div>
 			</nav>
-			<div className="container-fluid" style={{ marginTop: "65px" }}>
+			<div
+				className="container-fluid"
+				style={{ marginTop: "65px", minHeight: "100vh" }}
+			>
 				{loading && (
 					<div className="d-flex justify-content-center">
 						<div className="spinner-border text-secondary m-5" role="status">
