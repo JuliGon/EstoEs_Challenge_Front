@@ -86,7 +86,7 @@
   margin-bottom: 18px;
   list-style: none;
   text-align: center;
-  color: var(--bs-danger);
+  color: #808080;
 }
 
 .pager:before,
@@ -107,7 +107,7 @@
 .pager a {
   display: inline-block;
   padding: 5px 14px;
-  color: var(--bs-danger);
+  color: #808080;
   background-color: #fff;
   border: 1px solid #ddd;
   -webkit-border-radius: 15px;
