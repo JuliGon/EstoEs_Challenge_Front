@@ -12,7 +12,6 @@
   right: 0;
   z-index: 1; 
   padding: 10px;
-	margin-top: 20px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -38,7 +37,7 @@
 .pagination a:hover,
 .pagination .active a {
   background-color: var(--bs-danger);
-  border: 1px solid var(--bs-danger-border-subtle);
+  border: 1px solid #ddd;
   color: #ffffff;
 }
 
@@ -56,7 +55,7 @@
 .pagination .disabled span,
 .pagination .disabled a,
 .pagination .disabled a:hover {
-  color: var(--bs-danger-border-subtle);
+  color: #ddd;
   background-color: transparent;
   cursor: default;
 }
@@ -87,7 +86,7 @@
   margin-bottom: 18px;
   list-style: none;
   text-align: center;
-  color: #6c58bF;
+  color: var(--bs-danger);
 }
 
 .pager:before,
@@ -132,8 +131,4 @@
 .pager .disabled a,
 .pager .disabled a:hover {
   color: #999999;
-}
-
-
-
-
+}  
