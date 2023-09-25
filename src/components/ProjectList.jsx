@@ -11,7 +11,7 @@ import { getAssignments } from "../utils/assignmentControllers";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 import { BsTrash3 } from "react-icons/bs";
-import { BsPlusLg } from "react-icons/bs";
+import ReactPaginate from "react-paginate";
 
 export default function ProjectList() {
 	const [loading, setLoading] = useState(true);
@@ -19,8 +19,12 @@ export default function ProjectList() {
 	const [projects, setProjects] = useState([]);
 	const [assignments, setAssignments] = useState([]);
 	const [openProjectMenu, setOpenProjectMenu] = useState(null);
+	const [searchText, setSearchText] = useState("");
 	const navigate = useNavigate();
 
+	const [currentPage, setCurrentPage] = useState(0);
+	const projectsPerPage = 6; 
+			
 	useEffect(() => {
 		const controller = new AbortController();
 		const signal = controller.signal;
@@ -66,6 +70,7 @@ export default function ProjectList() {
 		};
 	}, []);
 
+	// Función para formatear la fecha de creación
 	const formatCreatedAt = (createdAt) => {
 		const date = new Date(createdAt);
 		const options = {
@@ -78,6 +83,7 @@ export default function ProjectList() {
 		return date.toLocaleDateString("es-ES", options);
 	};
 
+	// Manejador para editar un proyecto
 	const handleEdit = async (project, formData) => {
 		try {
 			const updatedProject = { ...project, ...formData };
@@ -99,6 +105,7 @@ export default function ProjectList() {
 		}
 	};
 
+	// Manejador para eliminar un proyecto
 	const handleDelete = async (project) => {
 		try {
 			await deleteProject(project.id);
@@ -150,27 +157,67 @@ export default function ProjectList() {
 		};
 	};
 
+	// Función para filtrar proyectos por nombre
+	const filteredProjects = projects
+  .filter((project) =>
+    project.name.toLowerCase().includes(searchText.toLowerCase())
+  )
+  .slice(currentPage * projectsPerPage, (currentPage + 1) * projectsPerPage);
+
+	console.log(filteredProjects.length)
+
+	const handlePageChange = ({ selected }) => {
+		setCurrentPage(selected);
+	};
+
+	const displayedProjects = searchText
+  ? filteredProjects
+  : projects.slice(currentPage * projectsPerPage, (currentPage + 1) * projectsPerPage);
+	
+
 	return (
 		<>
 			<nav
-				className="navbar fixed-top"
+				className="navbar navbar-expand-lg fixed-top"
 				style={{ zIndex: 1, backgroundColor: "#ffffff" }}
 			>
 				<div className="container-fluid">
-					<a className="navbar-brand" href="/" style={{ marginLeft: "22px" }}>
+					<a className="navbar-brand" href="/">
 						My Projects
 					</a>
-					<form className="d-flex">
-						<button className="btn btn-danger" type="button">
-							<a
-								href="/projects/create"
-								style={{ textDecoration: "none", color: "#ffffff" }}
-							>
-								<BsPlusLg style={{ marginRight: "8px" }} />
-								Add project
-							</a>
-						</button>
-					</form>
+					<button
+						className="navbar-toggler"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span className="navbar-toggler-icon"></span>
+					</button>
+					<div className="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul className="navbar-nav me-auto mb-2 mb-lg-0">
+							<li className="nav-item">
+								<a className="nav-link" href="/projects/create">
+									Add project
+								</a>
+							</li>
+						</ul>
+						<form className="d-flex" role="search">
+							<input
+								className="form-control me-2"
+								type="text"
+								placeholder="Search"
+								aria-label="Search"
+								value={searchText}
+								onChange={(e) => setSearchText(e.target.value)}
+							/>
+							<button className="btn btn-danger" type="submit">
+								Search
+							</button>
+						</form>
+					</div>
 				</div>
 			</nav>
 			<div className="container-fluid" style={{ marginTop: "65px" }}>
@@ -184,97 +231,119 @@ export default function ProjectList() {
 				{error && <p>Error: {error.message}</p>}
 				{!loading && !error && (
 					<ul className="list-group list-group-flush">
-						{projects.map((project) => (
-							<li
-								key={project.id}
-								className="list-group-item align-items-start position-relative"
-								aria-current="true"
-							>
-								<div>
-									<div className="ms-2 me-auto">
-										<div className="fw-bold">{project.name}</div>
-										<small>
-											Creation date: {formatCreatedAt(project.createdAt)}
-										</small>
-									</div>
+						{displayedProjects.map((project) => (
+								<li
+									key={project.id}
+									className="list-group-item align-items-start position-relative"
+									aria-current="true"
+								>
 									<div>
-										{project.assignment && (
-											<img
-												src={project.assignment.image}
-												alt="Avatar"
-												className="rounded-circle me-3"
-												width="25"
-												height="25"
-												style={{ marginLeft: "7.5px" }}
-											/>
-										)}
-										<span className="">
-											{project.assignment
-												? project.assignment.name
-												: "Unassigned"}
-										</span>
-									</div>
-									<div
-										className="position-absolute top-0 end-0 mt-2 me-2"
-										ref={menuRef}
-										onClick={(e) => e.stopPropagation()}
-									>
-										<button
-											className="btn btn-link btn-sm"
-											onClick={(e) => {
-												e.stopPropagation();
-												openMenu(project);
-											}}
+										<div className="ms-2 me-auto">
+											<div className="fw-bold">{project.name}</div>
+											<small>
+												Creation date: {formatCreatedAt(project.createdAt)}
+											</small>
+										</div>
+										<div>
+											{project.assignment && (
+												<img
+													src={project.assignment.image}
+													alt="Avatar"
+													className="rounded-circle me-3"
+													width="25"
+													height="25"
+													style={{ marginLeft: "7.5px" }}
+												/>
+											)}
+											<span className="">
+												{project.assignment
+													? project.assignment.name
+													: "Unassigned"}
+											</span>
+										</div>
+										<div
+											className="position-absolute top-0 end-0 mt-2 me-2"
+											ref={menuRef}
+											onClick={(e) => e.stopPropagation()}
 										>
-											<BsThreeDotsVertical style={{ color: "#1d1d1d" }} />
-										</button>
-										{openProjectMenu === project && (
-											<div
-												className="position-absolute"
-												style={{
-													...calculateMenuPosition(project),
-													backgroundColor: "white",
-													width: "100px",
-													boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)",
-													zIndex: 1,
-													marginLeft: "-50px",
+											<button
+												className="btn btn-link btn-sm"
+												onClick={(e) => {
+													e.stopPropagation();
+													openMenu(project);
 												}}
 											>
-												<ul
-													className="list-group list-group-flush"
-													style={{ cursor: "pointer" }}
+												<BsThreeDotsVertical style={{ color: "#1d1d1d" }} />
+											</button>
+											{openProjectMenu === project && (
+												<div
+													className="position-absolute"
+													style={{
+														...calculateMenuPosition(project),
+														backgroundColor: "white",
+														width: "100px",
+														boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)",
+														zIndex: 1,
+														marginLeft: "-50px",
+													}}
 												>
-													<li
-														className="list-group-item d-flex align-items-center"
-														onClick={() => handleEdit(project)}
+													<ul
+														className="list-group list-group-flush"
+														style={{ cursor: "pointer" }}
 													>
-														<Link
-															to={`/projects/${project.id}`}
-															style={{
-																textDecoration: "none",
-																color: "#1d1d1d",
-															}}
+														<li
+															className="list-group-item d-flex align-items-center"
+															onClick={() => handleEdit(project)}
 														>
-															<BsPencil style={{ marginRight: "8px" }} />
-															<span>Edit</span>
-														</Link>
-													</li>
-													<li
-														className="list-group-item d-flex align-items-center"
-														onClick={() => handleDelete(project)}
-													>
-														<BsTrash3 style={{ marginRight: "8px" }} />
-														<span>Delete</span>
-													</li>
-												</ul>
-											</div>
-										)}
+															<Link
+																to={`/projects/${project.id}`}
+																style={{
+																	textDecoration: "none",
+																	color: "#1d1d1d",
+																}}
+															>
+																<BsPencil style={{ marginRight: "8px" }} />
+																<span>Edit</span>
+															</Link>
+														</li>
+														<li
+															className="list-group-item d-flex align-items-center"
+															onClick={() => handleDelete(project)}
+														>
+															<BsTrash3 style={{ marginRight: "8px" }} />
+															<span>Delete</span>
+														</li>
+													</ul>
+												</div>
+											)}
+										</div>
 									</div>
-								</div>
-							</li>
-						))}
+								</li>
+							)
+						)}
 					</ul>
 				)}
+				<ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        breakLabel={"..."}
+        pageCount={Math.ceil(
+          projects.filter((project) =>
+            project.name.toLowerCase().includes(searchText.toLowerCase())
+          ).length / projectsPerPage
+        )}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePageChange}
+        containerClassName={"pagination justify-content-center"}
+        activeClassName={"active"}
+        previousClassName={"page-item"}
+        nextClassName={"page-item"}
+        pageClassName={"page-item"}
+        pageLinkClassName={"page-link bs-danger"}
+        previousLinkClassName={"page-link bs-danger"}
+        nextLinkClassName={"page-link bs-danger"}
+      />
 			</div>
 		</>
 	);
