@@ -238,7 +238,7 @@ export default function ProjectList() {
 					</div>
 				</div>
 			</nav>
-			<div className="container-fluid" style={{ marginTop: "60px" }}>
+			<div className="container-fluid" style={{ marginTop: "65px" }}>
 				{loading && (
 					<div className="d-flex justify-content-center">
 						<div className="spinner-border text-secondary m-5" role="status">
