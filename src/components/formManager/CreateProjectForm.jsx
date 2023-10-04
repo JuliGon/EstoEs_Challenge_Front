@@ -179,7 +179,7 @@ export default function CreateProjectForm() {
 							<option value="Disabled">Disabled</option>
 						</select>
 					</div>
-					<button type="submit" className="btn btn-danger">
+					<button type="submit" className="btn" style={{backgroundColor: "#8754cb", color: "#ffffff"}}>
 						Create project
 					</button>
 				</form>

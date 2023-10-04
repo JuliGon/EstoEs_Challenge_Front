@@ -12,6 +12,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 import { BsTrash3 } from "react-icons/bs";
 import ReactPaginate from "react-paginate";
+import Logo from "../../assets/logoFolder_isometric.png";
 import "./ProjectList.css";
 
 export default function ProjectList() {
@@ -22,6 +23,9 @@ export default function ProjectList() {
 	const [openProjectMenu, setOpenProjectMenu] = useState(null);
 	const [searchText, setSearchText] = useState("");
 	const navigate = useNavigate();
+
+	const [showDeleteModal, setShowDeleteModal] = useState(false);
+	const [projectToDelete, setProjectToDelete] = useState(null);
 
 	const [currentPage, setCurrentPage] = useState(0);
 	const projectsPerPage = 6;
@@ -178,6 +182,12 @@ export default function ProjectList() {
 				(currentPage + 1) * projectsPerPage
 		);
 
+	// Función para mostrar el modal de eliminación
+	const showDeleteConfirmationModal = (project) => {
+		setProjectToDelete(project);
+		setShowDeleteModal(true);
+	};
+
 	return (
 		<>
 			<nav
@@ -186,6 +196,7 @@ export default function ProjectList() {
 			>
 				<div className="container-fluid">
 					<a className="navbar-brand" href="/">
+						<img id="logo" src={Logo} alt="Logo" style={{ height: "35px" }} />
 						My Projects
 					</a>
 					<button
@@ -216,17 +227,18 @@ export default function ProjectList() {
 								value={searchText}
 								onChange={(e) => setSearchText(e.target.value)}
 							/>
-							<button className="btn btn-danger" type="submit">
+							<button
+								className="btn"
+								type="submit"
+								style={{ backgroundColor: "#8754cb", color: "#ffffff" }}
+							>
 								Search
 							</button>
 						</form>
 					</div>
 				</div>
 			</nav>
-			<div
-				className="container-fluid"
-				style={{ marginTop: "65px" }}
-			>
+			<div className="container-fluid" style={{ marginTop: "60px" }}>
 				{loading && (
 					<div className="d-flex justify-content-center">
 						<div className="spinner-border text-secondary m-5" role="status">
@@ -314,7 +326,7 @@ export default function ProjectList() {
 													</li>
 													<li
 														className="list-group-item d-flex align-items-center"
-														onClick={() => handleDelete(project)}
+														onClick={() => showDeleteConfirmationModal(project)}
 													>
 														<BsTrash3 style={{ marginRight: "8px" }} />
 														<span>Delete</span>
@@ -340,9 +352,7 @@ export default function ProjectList() {
 					marginPagesDisplayed={2}
 					pageRangeDisplayed={5}
 					onPageChange={handlePageChange}
-					containerClassName={
-						"pagination justify-content-center"
-					}
+					containerClassName={"pagination justify-content-center"}
 					activeClassName={"active"}
 					previousClassName={"page-item"}
 					nextClassName={"page-item"}
@@ -351,6 +361,57 @@ export default function ProjectList() {
 					previousLinkClassName={"page-link"}
 					nextLinkClassName={"page-link"}
 				/>
+			</div>
+			<div
+				className={`modal fade ${showDeleteModal ? "show" : ""}`}
+				tabIndex="-1"
+				role="dialog"
+				style={showDeleteModal ? { display: "block" } : {}}
+			>
+				<div className="modal-dialog" role="document">
+					<div className="modal-content">
+						<div className="modal-header">
+							<h5 className="modal-title">Confirm deletion</h5>
+							<button
+								type="button"
+								className="close"
+								data-dismiss="modal"
+								aria-label="Close"
+								onClick={() => setShowDeleteModal(false)}
+							>
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div className="modal-body">
+							{projectToDelete && (
+								<p>
+									¿Are you sure that you want to delete{" "}
+									<strong>{projectToDelete.name}</strong>?
+								</p>
+							)}
+						</div>
+						<div className="modal-footer">
+							<button
+								type="button"
+								className="btn btn-secondary"
+								onClick={() => setShowDeleteModal(false)}
+							>
+								Cancel
+							</button>
+							<button
+								type="button"
+								className="btn"
+								onClick={() => {
+									handleDelete(projectToDelete);
+									setShowDeleteModal(false);
+								}}
+								style={{ backgroundColor: "#8754cb", color: "#ffffff" }}
+							>
+								Delete
+							</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</>
 	);

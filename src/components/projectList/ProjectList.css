@@ -22,7 +22,7 @@
 
 .pagination li {
   display: inline;
-  color: var(--bs-danger);
+  color: #8754cb;
 }
 
 .pagination a {
@@ -36,13 +36,13 @@
 
 .pagination a:hover,
 .pagination .active a {
-  background-color: var(--bs-danger);
+  background-color: #8754cb;
   border: 1px solid #ddd;
   color: #ffffff;
 }
 
 .pagination a:focus {
-  background-color: var(--bs-danger);
+  background-color: #8754cb;
   color: #ffffff;
 }
 
@@ -101,7 +101,7 @@
 
 .pager li {
   display: inline;
-  color: var(--bs-danger);
+  color: #8754cb;
 }
 
 .pager a {

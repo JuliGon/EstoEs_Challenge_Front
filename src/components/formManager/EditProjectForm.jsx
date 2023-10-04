@@ -177,7 +177,7 @@ export default function EditProjectForm() {
 							required
 						/>
 					</div>
-					<button type="submit" className="btn btn-danger">
+					<button type="submit" className="btn" style={{backgroundColor: "#8754cb", color: "#ffffff"}}>
 						Save changes
 					</button>
 				</form>
