@@ -1,3 +1,19 @@
+.project-list-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+
+.container-fluid {
+  flex-grow: 1; 
+}
+
+.pagination-container {
+  bottom: 0;
+  padding: 20px 0; 
+  text-align: center; 
+}
+
 .pagination {
   height: 36px;
   margin: 18px 0;

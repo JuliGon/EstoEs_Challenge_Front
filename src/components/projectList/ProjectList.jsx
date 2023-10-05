@@ -189,7 +189,7 @@ export default function ProjectList() {
 	};
 
 	return (
-		<>
+		<div className="project-list-container">
 			<nav
 				className="navbar navbar-expand-lg fixed-top"
 				style={{ zIndex: 1, backgroundColor: "#ffffff" }}
@@ -339,6 +339,8 @@ export default function ProjectList() {
 						))}
 					</ul>
 				)}
+			</div>
+			<div className="pagination-container">
 				{!loading && (
 					<ReactPaginate
 						previousLabel={"Previous"}
@@ -413,6 +415,6 @@ export default function ProjectList() {
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
