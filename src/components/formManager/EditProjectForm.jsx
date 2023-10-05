@@ -18,6 +18,8 @@ export default function EditProjectForm() {
 		status: "",
 	});
 
+	const [alert, setAlert] = useState(null);
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -71,18 +73,27 @@ export default function EditProjectForm() {
 			!formData.assignedTo ||
 			!formData.status
 		) {
-			alert("All fields are required");
+			showAlert("All fields are required", "danger");
 			return;
 		}
 
 		try {
 			await updateProject(projectId, formData);
-			window.alert("Project updated successfully");
+			showAlert("Project edited successfully", "success");
 			navigate("/");
 		} catch (error) {
 			console.error("Something went wrong:", error);
+			showAlert("Error: Something went wrong", "danger");
 		}
 	};
+
+	// Función para mostrar la alerta 
+  const showAlert = (message, type) => {
+    setAlert({ message, type });
+    setTimeout(() => {
+      setAlert(null);
+    }, 5000); 
+  };
 
 	return (
 		<>
@@ -106,6 +117,11 @@ export default function EditProjectForm() {
 				className="container-fluid"
 				style={{ marginTop: "65px" }}
 			>
+				{alert && (
+          <div className={`alert alert-${alert.type} mt-3`} role="alert">
+            {alert.message}
+          </div>
+        )}
 				<form onSubmit={handleSubmit}>
 					<div className="mb-3">
 						<label htmlFor="name" className="form-label">

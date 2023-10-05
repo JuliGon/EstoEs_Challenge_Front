@@ -196,7 +196,7 @@ export default function ProjectList() {
 			>
 				<div className="container-fluid">
 					<a className="navbar-brand" href="/">
-						<img id="logo" src={Logo} alt="Logo" style={{ height: "35px" }} />
+						<img id="logo" src={Logo} alt="Logo" style={{ height: "30px" }} />
 						My Projects
 					</a>
 					<button
@@ -374,12 +374,11 @@ export default function ProjectList() {
 							<h5 className="modal-title">Confirm deletion</h5>
 							<button
 								type="button"
-								className="close"
-								data-dismiss="modal"
+								className="btn-close"
+								data-bs-dismiss="modal"
 								aria-label="Close"
 								onClick={() => setShowDeleteModal(false)}
 							>
-								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div className="modal-body">
@@ -394,6 +393,7 @@ export default function ProjectList() {
 							<button
 								type="button"
 								className="btn btn-secondary"
+								data-bs-dismiss="modal"
 								onClick={() => setShowDeleteModal(false)}
 							>
 								Cancel

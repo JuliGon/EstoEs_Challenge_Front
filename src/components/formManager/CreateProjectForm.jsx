@@ -16,6 +16,8 @@ export default function CreateProjectForm() {
 		status: "",
 	});
 
+	const [alert, setAlert] = useState(null);
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -34,7 +36,7 @@ export default function CreateProjectForm() {
 		fetchData();
 	}, []);
 
-	const handleCreateProject = (e) => {
+	const handleCreateProject = async (e) => {
 		e.preventDefault();
 		if (
 			!projectData.name ||
@@ -43,12 +45,13 @@ export default function CreateProjectForm() {
 			!projectData.assignedTo ||
 			!projectData.status
 		) {
-			alert("All fields are required");
+			showAlert("All fields are required", "danger");
 			return;
 		}
-
+	
 		try {
-			createProject(projectData);
+			await createProject(projectData);
+			showAlert("Project created successfully", "success");
 			setProjectData({
 				name: "",
 				description: "",
@@ -56,12 +59,20 @@ export default function CreateProjectForm() {
 				assignedTo: "",
 				status: "",
 			});
-			window.alert("Project created successfully")
 			navigate("/");
 		} catch (error) {
 			console.error("Something went wrong", error);
+			showAlert("Error: Something went wrong", "danger");
 		}
 	};
+
+  // Función para mostrar la alerta 
+  const showAlert = (message, type) => {
+    setAlert({ message, type });
+    setTimeout(() => {
+      setAlert(null);
+    }, 5000); 
+  };
 
 	return (
 		<>
@@ -85,6 +96,11 @@ export default function CreateProjectForm() {
 				className="container-fluid"
 				style={{ marginTop: "65px" }}
 			>
+				{alert && (
+          <div className={`alert alert-${alert.type} mt-3`} role="alert">
+            {alert.message}
+          </div>
+        )}
 				<form onSubmit={handleCreateProject}>
 					<div className="mb-3">
 						<label htmlFor="projectName" className="form-label">
