@@ -12,7 +12,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 import { BsTrash3 } from "react-icons/bs";
 import ReactPaginate from "react-paginate";
-import Logo from "../../assets/logoFolder_isometric.png";
+import Logo from "../../assets/Logo.png";
 import "./ProjectList.css";
 
 export default function ProjectList() {
@@ -196,8 +196,7 @@ export default function ProjectList() {
 			>
 				<div className="container-fluid">
 					<a className="navbar-brand" href="/">
-						<img id="logo" src={Logo} alt="Logo" style={{ height: "30px" }} />
-						My Projects
+						<img id="logo" src={Logo} alt="Logo" style={{ height: "35px" }} />
 					</a>
 					<button
 						className="navbar-toggler"
