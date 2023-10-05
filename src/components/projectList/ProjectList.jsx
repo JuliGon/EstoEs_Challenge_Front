@@ -28,7 +28,7 @@ export default function ProjectList() {
 	const [projectToDelete, setProjectToDelete] = useState(null);
 
 	const [currentPage, setCurrentPage] = useState(0);
-	const projectsPerPage = 6;
+	const projectsPerPage = 5;
 
 	useEffect(() => {
 		const controller = new AbortController();
