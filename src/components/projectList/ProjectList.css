@@ -1,7 +1,7 @@
 .project-list-container {
   display: flex;
   flex-direction: column;
-  min-height: 88vh; 
+  min-height: 100vh; 
 }
 
 .container-fluid {
@@ -10,7 +10,7 @@
 
 .pagination-container {
   bottom: 0;
-  padding: 20px 0; 
+  padding: 5px 0; 
   text-align: center; 
 }
 
