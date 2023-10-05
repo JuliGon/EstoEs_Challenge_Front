@@ -68,11 +68,13 @@ export default function CreateProjectForm() {
 
   // Función para mostrar la alerta 
   const showAlert = (message, type) => {
-    setAlert({ message, type });
-    setTimeout(() => {
-      setAlert(null);
-    }, 5000); 
-  };
+		console.log("Showing alert:", message, type);
+		setAlert({ message, type });
+		setTimeout(() => {
+			setAlert(null);
+		}, 5000); 
+	};
+	
 
 	return (
 		<>
