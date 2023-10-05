@@ -180,7 +180,7 @@ export default function ProjectList() {
 		: projects.slice(
 				currentPage * projectsPerPage,
 				(currentPage + 1) * projectsPerPage
-		);
+		  );
 
 	// Función para mostrar el modal de eliminación
 	const showDeleteConfirmationModal = (project) => {
@@ -239,7 +239,7 @@ export default function ProjectList() {
 			</nav>
 			<div className="container-fluid" style={{ marginTop: "65px" }}>
 				{loading && (
-					<div className="d-flex justify-content-center">
+					<div className="loader-container">
 						<div className="spinner-border text-secondary m-5" role="status">
 							<span className="visually-hidden">Loading...</span>
 						</div>
@@ -339,27 +339,29 @@ export default function ProjectList() {
 						))}
 					</ul>
 				)}
-				<ReactPaginate
-					previousLabel={"Previous"}
-					nextLabel={"Next"}
-					breakLabel={"..."}
-					pageCount={Math.ceil(
-						projects.filter((project) =>
-							project.name.toLowerCase().includes(searchText.toLowerCase())
-						).length / projectsPerPage
-					)}
-					marginPagesDisplayed={2}
-					pageRangeDisplayed={5}
-					onPageChange={handlePageChange}
-					containerClassName={"pagination justify-content-center"}
-					activeClassName={"active"}
-					previousClassName={"page-item"}
-					nextClassName={"page-item"}
-					pageClassName={"page-item"}
-					pageLinkClassName={"page-link"}
-					previousLinkClassName={"page-link"}
-					nextLinkClassName={"page-link"}
-				/>
+				{!loading && (
+					<ReactPaginate
+						previousLabel={"Previous"}
+						nextLabel={"Next"}
+						breakLabel={"..."}
+						pageCount={Math.ceil(
+							projects.filter((project) =>
+								project.name.toLowerCase().includes(searchText.toLowerCase())
+							).length / projectsPerPage
+						)}
+						marginPagesDisplayed={2}
+						pageRangeDisplayed={5}
+						onPageChange={handlePageChange}
+						containerClassName={"pagination justify-content-center"}
+						activeClassName={"active"}
+						previousClassName={"page-item"}
+						nextClassName={"page-item"}
+						pageClassName={"page-item"}
+						pageLinkClassName={"page-link"}
+						previousLinkClassName={"page-link"}
+						nextLinkClassName={"page-link"}
+					/>
+				)}
 			</div>
 			<div
 				className={`modal fade ${showDeleteModal ? "show" : ""}`}
@@ -377,8 +379,7 @@ export default function ProjectList() {
 								data-bs-dismiss="modal"
 								aria-label="Close"
 								onClick={() => setShowDeleteModal(false)}
-							>
-							</button>
+							></button>
 						</div>
 						<div className="modal-body">
 							{projectToDelete && (
