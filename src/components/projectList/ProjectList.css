@@ -156,7 +156,7 @@
   transform: translate(-50%, -50%);
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 475px) {
   .project-list-container {
     min-height: 92vh; 
   }
