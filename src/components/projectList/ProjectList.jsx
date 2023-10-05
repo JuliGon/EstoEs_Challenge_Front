@@ -180,7 +180,7 @@ export default function ProjectList() {
 		: projects.slice(
 				currentPage * projectsPerPage,
 				(currentPage + 1) * projectsPerPage
-		  );
+		);
 
 	// Función para mostrar el modal de eliminación
 	const showDeleteConfirmationModal = (project) => {
@@ -369,7 +369,7 @@ export default function ProjectList() {
 				role="dialog"
 				style={showDeleteModal ? { display: "block" } : {}}
 			>
-				<div className="modal-dialog" role="document">
+				<div className="modal-dialog modal-dialog-centered" role="document">
 					<div className="modal-content">
 						<div className="modal-header">
 							<h5 className="modal-title">Confirm deletion</h5>
