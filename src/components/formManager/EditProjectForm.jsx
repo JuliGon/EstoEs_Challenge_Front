@@ -91,9 +91,9 @@ export default function EditProjectForm() {
   const showAlert = (message, type) => {
 		console.log("Showing alert:", message, type);
     setAlert({ message, type });
-    setTimeout(() => {
-      setAlert(null);
-    }, 5000); 
+    // setTimeout(() => {
+    //   setAlert(null);
+    // }, 5000); 
   };
 
 	return (
