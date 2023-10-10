@@ -1,0 +1,22 @@
+.footer {
+	display: flex;
+	justify-content:flex-end;
+	align-content: center;
+	position:fixed;
+	width: 100%;
+	height: auto;
+	font-weight: 600 !important;
+	font-size: 12px;
+	padding: 0.5rem 1rem;
+	bottom: 0;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+}
+
+.link {
+	text-decoration: none;
+	color: #1d1d1d;
+}
+
+.link:hover {
+	color: #8754cb;
+}

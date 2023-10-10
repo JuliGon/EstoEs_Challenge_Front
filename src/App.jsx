@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProjectList from "./components/projectList/ProjectList";
 import FormManager from "./components/formManager/FormManager";
+import Footer from "./components/footer/Footer";
 
 function App() {
 	return (
@@ -19,6 +20,7 @@ function App() {
 						element={<FormManager isEditMode={true} />}
 					/>
 				</Routes>
+				<Footer />
 			</div>
 		</Router>
 	);
