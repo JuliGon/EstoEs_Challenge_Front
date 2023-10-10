@@ -155,9 +155,3 @@
   transform: translate(-50%, -50%);
 }
 
-@media screen and (max-width: 576px) {
-  .project-list-container {
-    min-height: 93vh; 
-  }
-
-}
