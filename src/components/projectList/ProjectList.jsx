@@ -9,7 +9,8 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { getAssignments } from "../../services/assignmentControllers";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { BsPencil, BsTrash3, BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
+import { BsPencil, BsTrash3 } from "react-icons/bs";
+import { BiChevronsLeft, BiChevronsRight } from "react-icons/bi";
 import ReactPaginate from "react-paginate";
 import Logo from "../../assets/Logo.png";
 import "./ProjectList.css";
@@ -342,8 +343,8 @@ export default function ProjectList() {
 			<div className="pagination-container">
 				{!loading && (
 					<ReactPaginate
-						previousLabel={<BsChevronDoubleLeft />}
-						nextLabel={<BsChevronDoubleRight />}
+						previousLabel={<BiChevronsLeft />}
+						nextLabel={<BiChevronsRight />}
 						breakLabel={"..."}
 						pageCount={Math.ceil(
 							projects.filter((project) =>
