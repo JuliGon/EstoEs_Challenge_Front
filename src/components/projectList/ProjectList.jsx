@@ -196,7 +196,7 @@ export default function ProjectList() {
 			>
 				<div className="container-fluid">
 					<a className="navbar-brand" href="/">
-						<img id="logo" src={Logo} alt="Logo" style={{ height: "40px" }} />
+						<img id="logo" src={Logo} alt="Logo" style={{ height: "40px", marginBottom: "5px" }} />
 					</a>
 					<button
 						className="navbar-toggler"
