@@ -1,10 +1,11 @@
-/* eslint-disable no-undef */
-/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { updateProject, getProjects } from "../../services/projectControllers";
 import { useParams } from "react-router-dom";
 import { BsArrowLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function EditProjectForm() {
 	const { id } = useParams();
@@ -17,8 +18,6 @@ export default function EditProjectForm() {
 		assignedTo: "",
 		status: "",
 	});
-
-	const [alert, setAlert] = useState(null);
 
 	const navigate = useNavigate();
 
@@ -73,31 +72,28 @@ export default function EditProjectForm() {
 			!formData.assignedTo ||
 			!formData.status
 		) {
-			showAlert("All fields are required", "danger");
+			showAlert("All fields are required");
 			return;
 		}
 
 		try {
 			await updateProject(projectId, formData);
-			showAlert("Project edited successfully", "success");
+			showAlert("Project edited successfully");
 			navigate("/");
 		} catch (error) {
 			console.error("Something went wrong:", error);
-			showAlert("Error: Something went wrong", "danger");
+			showAlert("Something went wrong");
 		}
 	};
 
-	// Función para mostrar la alerta 
-  const showAlert = (message, type) => {
-		console.log("Showing alert:", message, type);
-    setAlert({ message, type });
-    // setTimeout(() => {
-    //   setAlert(null);
-    // }, 5000); 
-  };
+	const showAlert = (message) => {
+		toast(message);
+		console.log(message);
+	};
 
 	return (
 		<>
+			<ToastContainer />
 			<nav
 				className="navbar fixed-top"
 				style={{ zIndex: 1, backgroundColor: "#ffffff" }}
@@ -114,15 +110,7 @@ export default function EditProjectForm() {
 					<a className="navbar-brand">Edit project</a>
 				</div>
 			</nav>
-			<div
-				className="container-fluid"
-				style={{ marginTop: "65px" }}
-			>
-				{alert && (
-          <div className={`alert alert-${alert.type} mt-3`} role="alert">
-            {alert.message}
-          </div>
-        )}
+			<div className="container-fluid" style={{ marginTop: "65px" }}>
 				<form onSubmit={handleSubmit}>
 					<div className="mb-3">
 						<label htmlFor="name" className="form-label">
@@ -194,7 +182,11 @@ export default function EditProjectForm() {
 							required
 						/>
 					</div>
-					<button type="submit" className="btn" style={{backgroundColor: "#8754cb", color: "#ffffff"}}>
+					<button
+						type="submit"
+						className="btn"
+						style={{ backgroundColor: "#8754cb", color: "#ffffff" }}
+					>
 						Save changes
 					</button>
 				</form>
